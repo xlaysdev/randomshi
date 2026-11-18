@@ -31,7 +31,7 @@ function load(file){if(!file||!file.type.startsWith('image/'))return;const url=U
 $('choose').onclick=()=>$('file').click();$('file').onchange=e=>load(e.target.files[0]);$('remove').onclick=()=>{img=null;$('empty').classList.remove('hide')};
 stage.ondragover=e=>{e.preventDefault();stage.style.outline='2px dashed #b58aff'};stage.ondragleave=()=>stage.style.outline='';stage.ondrop=e=>{e.preventDefault();stage.style.outline='';load(e.dataTransfer.files[0])};
 function draw(t){const p=params(),period=1/p.speed,phase=((t%period)/period),impact=phase<.12?1-phase/.12:0,launch=phase>=.12&&phase<.28?(phase-.12)/.16:0;
-const rise=Math.sin(Math.PI*Math.max(0,Math.min(1,(phase-.12)/.76)));
+const rise=Math.pow(Math.sin(Math.PI*Math.max(0,Math.min(1,(phase-.12)/.76))),1/p.gravity);
 const bounceY=phase<.12?0:Math.max(0,rise)*p.height;
 const fall=phase>.88?Math.pow((phase-.88)/.12,2):0;
 const y=canvas.height*.72-bounceY+fall*p.height*.08;
