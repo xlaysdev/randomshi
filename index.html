@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#100b1c"><meta name="description" content="Tweenslop Lab — make gloriously over-tweened edits from any image.">
+<title>Tweenslop Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0812;--panel:#151020;--panel2:#1d162b;--line:#302440;--text:#f7f0ff;--muted:#a99bb8;--purple:#a875ff;--pink:#ff6fcf;--cyan:#75e6ff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#34204f 0,transparent 55%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;color:inherit;border:1px solid var(--line);background:#241a33;border-radius:12px;padding:10px 14px;font-weight:700;transition:.16s}button:hover{border-color:var(--purple);transform:translateY(-1px)}button:active{transform:scale(.98)}button.primary{background:linear-gradient(120deg,#8953e8,#c14fae);border:0;color:white}button.active{background:#59358a;border-color:#c29aff}.app{max-width:1440px;margin:auto;padding:22px clamp(12px,3vw,36px) 40px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#a875ff,#ff6fcf);display:grid;place-items:center;font-size:22px;box-shadow:0 8px 30px #a34dff44}.brand h1{font-size:20px;letter-spacing:-.7px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px;align-items:center}.layout{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;align-items:start}.workspace,.panel{background:linear-gradient(160deg,#191226,#100c19);border:1px solid var(--line);border-radius:20px;box-shadow:0 18px 60px #0004}.workspace{padding:14px}.stage-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:10px}.eyebrow{font-size:11px;letter-spacing:1.5px;color:#c6a6ff;font-weight:900}.stage-actions{display:flex;gap:7px}.stage-wrap{position:relative;background-color:#09070e;background-image:linear-gradient(45deg,#171222 25%,transparent 25%),linear-gradient(-45deg,#171222 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#171222 75%),linear-gradient(-45deg,transparent 75%,#171222 75%);background-size:24px 24px;background-position:0 0,0 12px,12px -12px,-12px 0;border:1px solid #342644;border-radius:16px;overflow:hidden;display:grid;place-items:center;min-height:360px;aspect-ratio:16/9;touch-action:pan-y}canvas{display:block;width:100%;height:100%;position:absolute;inset:0}.empty{position:relative;text-align:center;padding:24px;pointer-events:none}.empty .upload-icon{font-size:42px;margin-bottom:8px}.empty h2{font-size:18px;margin:0 0 5px}.empty p{color:var(--muted);margin:0}.empty.hidden{display:none}.drop{outline:2px dashed var(--purple);outline-offset:-8px}.transport{display:flex;align-items:center;gap:9px;padding:13px 2px 2px}.play{width:46px;height:42px;font-size:17px}.track{height:6px;background:#342842;border-radius:20px;flex:1;overflow:hidden}.track span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:20px}.time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12px;min-width:78px;text-align:right}.panel{padding:16px;display:flex;flex-direction:column;gap:17px}.panel-title{display:flex;justify-content:space-between;align-items:center}.panel-title h2{font-size:15px;margin:0}.pill{font-size:10px;padding:4px 8px;border-radius:20px;background:#35224c;color:#d7bcff;font-weight:800}.group{display:flex;flex-direction:column;gap:9px}.group h3{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:#bba9ca;margin:0}.presets{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.presets button{font-size:12px;padding:9px 8px;text-align:left}.control{display:grid;grid-template-columns:1fr auto;align-items:center;gap:7px}.control label{font-size:12px;color:#e7dff0}.control output{font-size:11px;color:#c5a8ff;font-variant-numeric:tabular-nums}.control input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--purple);margin:0}.toggles{display:grid;grid-template-columns:1fr 1fr;gap:8px}.toggle{display:flex;align-items:center;gap:7px;font-size:12px;color:#ded3eb}.toggle input{accent-color:var(--purple);width:16px;height:16px}.upload-row{display:flex;gap:8px}.upload-row button{flex:1}.hint{font-size:11px;color:var(--muted);margin:0}.bottom{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:16px;color:var(--muted);font-size:11px}.bottom strong{color:#d6baff}.file-input{display:none}.color-input{width:35px;height:28px;padding:0;border:0;background:none}.mobile-only{display:none}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.panel{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel-title,.upload-group{grid-column:1/-1}.stage-wrap{min-height:270px;aspect-ratio:4/3}.app{padding:14px 10px 30px}.top{margin-bottom:13px}.brand h1{font-size:18px}}
+@media(max-width:520px){.top{align-items:flex-start}.top-actions button{padding:9px;font-size:11px}.brand p{max-width:160px}.panel{grid-template-columns:1fr}.panel-title,.upload-group{grid-column:auto}.stage-wrap{min-height:250px}.bottom{align-items:flex-start;flex-direction:column}.presets{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">✦</div><div><h1>Tweenslop Lab</h1><p>Turn one image into an unnecessarily dramatic edit.</p></div></div><div class="top-actions"><button id="reset">Reset</button><button class="primary" id="export">Export video ↗</button></div></header>
+<main class="layout">
+<section class="workspace">
+<div class="stage-head"><span class="eyebrow">LIVE PREVIEW</span><div class="stage-actions"><button id="fit">Fit</button><button id="fullscreen">⛶</button></div></div>
+<div class="stage-wrap" id="stage"><canvas id="canvas" width="1280" height="720"></canvas><div class="empty" id="empty"><div class="upload-icon">▧</div><h2>Drop your image into the chaos</h2><p>Choose a PNG, JPG, WebP or GIF frame</p></div></div>
+<div class="transport"><button class="play primary" id="play">Ⅱ</button><button id="restart">↺</button><div class="track"><span id="progress"></span></div><span class="time" id="time">00:00 / 00:08</span></div>
+</section>
+<aside class="panel">
+<div class="panel-title"><h2>Motion controls</h2><span class="pill">TWEEN ENGINE</span></div>
+<div class="group upload-group"><h3>Image</h3><div class="upload-row"><button class="primary" id="choose">＋ Upload image</button><button id="remove">Remove</button></div><input class="file-input" id="file" type="file" accept="image/*"><p class="hint">Transparent PNGs look especially good.</p></div>
+<div class="group"><h3>Preset recipes</h3><div class="presets"><button class="active" data-preset="insanity">✦ Insanity</button><button data-preset="bounce">↕ Mega bounce</button><button data-preset="spin">⟳ Spin cycle</button><button data-preset="punch">✹ Bass punch</button><button data-preset="float">〰 Jelly wobble</button><button data-preset="glitch">▦ Chaos trail</button></div></div>
+<div class="group"><h3>Intensity</h3>
+<div class="control"><label for="speed">Speed</label><output id="speedOut">1.4×</output><input id="speed" type="range" min=".3" max="3" step=".1" value="1.4"></div>
+<div class="control"><label for="scale">Scale chaos</label><output id="scaleOut">85%</output><input id="scale" type="range" min="0" max="150" step="1" value="85"></div>
+<div class="control"><label for="rotation">Rotation</label><output id="rotationOut">100%</output><input id="rotation" type="range" min="0" max="200" step="1" value="100"></div>
+<div class="control"><label for="squash">Squash & stretch</label><output id="squashOut">100%</output><input id="squash" type="range" min="0" max="180" step="1" value="100"></div>
+<div class="control"><label for="trail">Ghost trails</label><output id="trailOut">4</output><input id="trail" type="range" min="0" max="10" step="1" value="4"></div>
+</div>
+<div class="group"><h3>Extra chaos</h3><div class="toggles"><label class="toggle"><input id="duplicates" type="checkbox" checked> Echo copies</label><label class="toggle"><input id="flash" type="checkbox"> Beat flashes</label><label class="toggle"><input id="jitter" type="checkbox" checked> Micro jitter</label><label class="toggle"><input id="mirror" type="checkbox"> Mirror flips</label></div></div>
+<div class="group"><h3>Canvas</h3><div class="control"><label for="bg">Background</label><input id="bg" class="color-input" type="color" value="#120c1d"></div><div class="control"><label for="duration">Loop length</label><output id="durationOut">8s</output><input id="duration" type="range" min="3" max="20" step="1" value="8"></div></div>
+</aside>
+</main>
+<footer class="bottom"><span><strong>TIP:</strong> Use a cutout PNG, crank the intensity, and let it be ridiculous.</span><span>Runs locally in your browser · No upload server</span></footer>
+</div>
+<script>
+(()=>{
+const $=id=>document.getElementById(id),canvas=$('canvas'),ctx=canvas.getContext('2d'),stage=$('stage');
+let img=null,playing=true,start=performance.now(),pausedAt=0,raf=0,recording=false;
+const defaults={speed:1.4,scale:85,rotation:100,squash:100,trail:4,duration:8,bg:'#120c1d',duplicates:true,flash:false,jitter:true,mirror:false};
+const presets={
+insanity:{speed:1.7,scale:110,rotation:145,squash:150,trail:6,duplicates:true,flash:true,jitter:true,mirror:true},
+bounce:{speed:1.2,scale:65,rotation:35,squash:170,trail:2,duplicates:false,flash:false,jitter:false,mirror:false},
+spin:{speed:1.1,scale:65,rotation:200,squash:55,trail:5,duplicates:true,flash:false,jitter:false,mirror:false},
+punch:{speed:2.1,scale:125,rotation:60,squash:180,trail:3,duplicates:true,flash:true,jitter:true,mirror:false},
+float:{speed:.7,scale:35,rotation:40,squash:100,trail:2,duplicates:false,flash:false,jitter:false,mirror:false},
+glitch:{speed:2.5,scale:145,rotation:170,squash:80,trail:10,duplicates:true,flash:true,jitter:true,mirror:true}
+};
+function val(id){return +$(id).value}function on(id){return $(id).checked}
+function params(){return{speed:val('speed'),scale:val('scale')/100,rotation:val('rotation')/100,squash:val('squash')/100,trail:val('trail'),duration:val('duration'),bg:$('bg').value,duplicates:on('duplicates'),flash:on('flash'),jitter:on('jitter'),mirror:on('mirror')}}
+function set(id,v){$(id).value=v;$(id).dispatchEvent(new Event('input'))}
+function apply(p){Object.entries(p).forEach(([k,v])=>{let el=$(k);if(!el)return;if(el.type==='checkbox')el.checked=v;else el.value=v;el.dispatchEvent(new Event('input'))})}
+function labels(){[['speed','speedOut',v=>v.toFixed(1)+'×'],['scale','scaleOut',v=>v+'%'],['rotation','rotationOut',v=>v+'%'],['squash','squashOut',v=>v+'%'],['trail','trailOut',v=>v],['duration','durationOut',v=>v+'s']].forEach(([a,b,f])=>$(b).textContent=f(val(a)))}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('input',labels));labels();
+function imageFrom(file){if(!file)return;const url=URL.createObjectURL(file),im=new Image();im.onload=()=>{img=im;$('empty').classList.add('hidden');URL.revokeObjectURL(url)};im.src=url}
+$('choose').onclick=()=>$('file').click();$('file').onchange=e=>imageFrom(e.target.files[0]);$('remove').onclick=()=>{img=null;$('empty').classList.remove('hidden')};
+stage.addEventListener('dragover',e=>{e.preventDefault();stage.classList.add('drop')});stage.addEventListener('dragleave',()=>stage.classList.remove('drop'));stage.addEventListener('drop',e=>{e.preventDefault();stage.classList.remove('drop');imageFrom(e.dataTransfer.files[0])});
+document.querySelectorAll('[data-preset]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-preset]').forEach(x=>x.classList.remove('active'));b.classList.add('active');apply(presets[b.dataset.preset])});
+$('play').onclick=()=>{playing=!playing;if(playing){start=performance.now()-pausedAt*1000;loop()}else{pausedAt=(performance.now()-start)/1000;cancelAnimationFrame(raf)}$('play').textContent=playing?'Ⅱ':'▶'};
+$('restart').onclick=()=>{start=performance.now();pausedAt=0;if(!playing){playing=true;$('play').textContent='Ⅱ';loop()}};
+$('reset').onclick=()=>{apply(defaults);document.querySelectorAll('[data-preset]').forEach(x=>x.classList.remove('active'));document.querySelector('[data-preset="insanity"]').classList.add('active')};
+$('fit').onclick=()=>{canvas.width=1280;canvas.height=720};$('fullscreen').onclick=()=>{if(stage.requestFullscreen)stage.requestFullscreen()};
+function drawImage(im,x,y,w,h,angle,sx,sy,alpha,flip){ctx.save();ctx.globalAlpha=alpha;ctx.translate(x,y);ctx.rotate(angle);ctx.scale(flip?-sx:sx,sy);ctx.drawImage(im,-w/2,-h/2,w,h);ctx.restore()}
+function render(t){const p=params(),duration=p.duration,phase=(t*p.speed)%duration/duration,a=phase*Math.PI*2,beat=Math.pow(Math.max(0,Math.sin(a*4)),7),bounce=Math.abs(Math.sin(a*2)),pulse=Math.sin(a*3),j=p.jitter?(Math.sin(t*53)*.025+Math.cos(t*37)*.018):0;
+ctx.clearRect(0,0,canvas.width,canvas.height);ctx.fillStyle=p.bg;ctx.fillRect(0,0,canvas.width,canvas.height);
+if(p.flash&&beat>.78){ctx.fillStyle='rgba(255,90,220,.15)';ctx.fillRect(0,0,canvas.width,canvas.height)}
+if(!img){ctx.fillStyle='#a997b8';ctx.font='22px system-ui';ctx.textAlign='center';ctx.fillText('Upload an image to start tweening',640,370);return}
+const maxW=canvas.width*.48,maxH=canvas.height*.63,ratio=Math.min(maxW/img.width,maxH/img.height),w=img.width*ratio,h=img.height*ratio;
+const intensity=p.scale,rot=p.rotation,sq=p.squash,baseX=640+Math.sin(a*2.2)*intensity*145,baseY=360+Math.cos(a*2)*intensity*100;
+const sx=1+Math.sin(a*4)*.32*sq+beat*.35*sq,sy=1-Math.sin(a*4)*.24*sq-beat*.27*sq;
+if(p.duplicates){for(let i=p.trail;i>0;i--){const lag=i*.10,aa=a-lag*2*Math.PI,tx=640+Math.sin(aa*2.2)*intensity*145,ty=360+Math.cos(aa*2)*intensity*100;drawImage(img,tx,ty,w,h,Math.sin(aa*3)*rot*.9,.92,.92,.07*(1-i/(p.trail+1)),false)}}
+for(let i=p.trail;i>0;i--){const lag=i*.055,aa=a-lag*2*Math.PI;drawImage(img,baseX+Math.sin(aa*2.2)*intensity*55,baseY+Math.cos(aa*2)*intensity*42,w,h,Math.sin(aa*3)*rot*.7,.98,.98,.10*(1-i/(p.trail+1)),false)}
+const angle=(Math.sin(a*2.4)*.42+Math.sin(a*5)*.12)*rot+j,flip=p.mirror&&Math.sin(a*2)>0;
+drawImage(img,baseX+(Math.random()-.5)*j*30,baseY,w,h,angle,sx,sy,1,flip);
+if(p.duplicates){drawImage(img,baseX+Math.sin(a*3)*260*intensity,baseY+Math.cos(a*2)*150*intensity,w*.55,h*.55,-angle*1.5,.8,.8,.45,false);drawImage(img,baseX-Math.sin(a*3)*260*intensity,baseY-Math.cos(a*2)*150*intensity,w*.4,h*.4,angle*1.7,.8,.8,.3,true)}
+if(p.flash&&beat>.65){ctx.strokeStyle='rgba(255,255,255,.8)';ctx.lineWidth=8+beat*15;ctx.strokeRect(12,12,1256,696)}
+}
+function loop(){if(!playing)return;const t=(performance.now()-start)/1000;render(t);$('progress').style.width=((t%val('duration'))/val('duration')*100)+'%';$('time').textContent='00:'+String(Math.floor(t%val('duration'))).padStart(2,'0')+' / 00:'+String(val('duration')).padStart(2,'0');raf=requestAnimationFrame(loop)}
+loop();
+$('export').onclick=async()=>{if(recording)return;if(!canvas.captureStream||!window.MediaRecorder){alert('Video export is not supported in this browser. Try Chrome.');return}recording=true;const btn=$('export');btn.textContent='Recording…';const stream=canvas.captureStream(30);let mime=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(x=>MediaRecorder.isTypeSupported(x));if(!mime){btn.textContent='Export video ↗';recording=false;alert('WebM recording is unavailable in this browser.');return}const rec=new MediaRecorder(stream,{mimeType:mime}),chunks=[];rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};rec.onstop=()=>{const blob=new Blob(chunks,{type:mime}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='tweenslop-edit.webm';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);stream.getTracks().forEach(x=>x.stop());btn.textContent='Export video ↗';recording=false};const wasPlaying=playing,oldStart=start;playing=true;start=performance.now();loop();rec.start();setTimeout(()=>{rec.stop();if(!wasPlaying){playing=false;cancelAnimationFrame(raf);$('play').textContent='▶'}start=oldStart},val('duration')*1000)};
+window.addEventListener('resize',()=>{});document.addEventListener('visibilitychange',()=>{if(document.hidden&&playing){pausedAt=(performance.now()-start)/1000;playing=false;cancelAnimationFrame(raf);$('play').textContent='▶'}});
+})();
+</script>
+</body></html>
